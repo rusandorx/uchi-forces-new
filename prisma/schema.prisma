@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  CREATOR
+}
+
+model Profile {
+  id String @id @default(uuid())
+  userId String @unique
+  name String 
+  imageUrl String @db.Text
+  email String @db.Text
+  createdTasks Task[] @relation("createdTasks")
+  completedTasks Task[] @relation("completedTasks")
+  incorrectTasks Task[] @relation("incorrectTasks")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+  role Role @default(USER)
+}
+
+enum Lessons {
+  Math
+  Physics
+  ComputerScience
+  Russian
+}
+
+model Task {
+  id String @id @default(uuid())
+  title String
+  description String @db.Text
+  taskImages String[] @db.Text
+  difficulty Int
+  answer String
+  solution String @db.Text
+  solutionImages String[] @db.Text
+  points Int
+  lesson Lessons
+  authorId String
+  author Profile @relation("createdTasks", fields: [authorId], references: [id], onDelete: Cascade)
+  completedBy Profile[] @relation("completedTasks")
+  incorrectTasksBy Profile[] @relation("incorrectTasks")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index(lesson)
+  @@index(difficulty)
+  @@index(authorId)
+}
