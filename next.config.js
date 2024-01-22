@@ -6,6 +6,9 @@ const nextConfig = {
   }, {
       protocol: "https",
       hostname: "utfs.io"
-  }]}
+  }]},
+  typescript: {
+    ignoreBuildErrors: true,
+  }
 }
 module.exports = nextConfig

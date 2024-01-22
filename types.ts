@@ -1,7 +1,5 @@
 import { Lessons, Profile, Task } from "@prisma/client";
 
-import { solutionFields } from "./types";
-
 export type FilesEndPoints = "taskImages" | "solutionImages";
 export type TaskValues = {
 	title: string;
