@@ -1,19 +1,17 @@
 import {
-	Binary,
-	BookA,
-	FunctionSquare,
-	Home,
-	Pencil,
-	Plus,
-	SigmaSquare,
-	Users,
+  Binary,
+  BookA,
+  FunctionSquare,
+  Home,
+  Plus,
+  SigmaSquare,
+  Users
 } from "lucide-react";
 import { Lessons, Role } from "@prisma/client";
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { NavigationAction } from "./navigation-action";
 import { NavigationItem } from "./navigation-item";
-import { ProfileSearch } from "../profile-search";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TaskSearch } from "../task/task-search";

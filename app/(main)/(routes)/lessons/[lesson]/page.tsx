@@ -31,20 +31,28 @@ const LessonPage = async ({
 					select: Object.assign(
 						// eslint-disable-next-line
 						// @ts-ignore
-						...nonSolutionFields.map((k) => ({ [k]: true })) 
+						...nonSolutionFields.map((k) => ({ [k]: true }))
 					),
 			  });
 	const completedTasks = profile?.completedTasks.map((task) => task.id);
 	const createdTasks = profile?.createdTasks.map((task) => task.id);
 	const incorrectTasks = profile?.incorrectTasks.map((task) => task.id);
 
+	// eslint-disable-next-line
+	// @ts-ignore
 	tasks = tasks
 		.map((task) => {
 			if (!profile) return { ...task, completed: false, created: false };
+			// eslint-disable-next-line
+			// @ts-ignore
 			if (completedTasks && completedTasks.includes(task.id))
 				return { ...task, completed: true };
+			// eslint-disable-next-line
+			// @ts-ignore
 			if (createdTasks && createdTasks.includes(task.id))
 				return { ...task, created: true };
+			// eslint-disable-next-line
+			// @ts-ignore
 			if (incorrectTasks && incorrectTasks.includes(task.id))
 				return { ...task, failed: true };
 			return task;

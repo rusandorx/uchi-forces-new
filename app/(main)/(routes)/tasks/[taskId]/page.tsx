@@ -32,12 +32,15 @@ const TaskPage = async ({ params }: { params: { taskId: string } }) => {
 	const isTaskNew = !completed && !created && !failed;
 
 	if (isTaskNew)
+		// eslint-disable-next-line
+		// @ts-ignore
 		task = exclude(task, [
 			"answer",
 			"solution",
 			"solutionImages",
 		]) as TaskWithoutSolution;
-
+	// eslint-disable-next-line
+	// @ts-ignore
 	return <TaskCardFull {...task} profile={profile}></TaskCardFull>;
 };
 

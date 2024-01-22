@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export const TaskAnswerForm = ({ taskId }: { taskId: string }) => {
-  const [, rerender] = useReducer(x => x + 1, 0);
+  const [,] = useReducer(x => x + 1, 0);
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 
