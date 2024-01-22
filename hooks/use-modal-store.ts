@@ -1,11 +1,13 @@
-import { Task } from "@prisma/client";
+import { Profile, Task } from "@prisma/client";
+
 import { create } from "zustand";
 
-export type ModalType = "createTask" | "deleteTask" | "editTask";
+export type ModalType = "createTask" | "deleteTask" | "editTask" | "profiles";
 
 export interface ModalData {
   taskId?: string;
   task?: Task;
+  profiles?: Profile[];
 }
 
 interface ModalStore {

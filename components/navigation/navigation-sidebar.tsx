@@ -1,17 +1,19 @@
 import {
-  Binary,
-  BookA,
-  FunctionSquare,
-  Home,
-  Pencil,
-  Plus,
-  SigmaSquare,
+	Binary,
+	BookA,
+	FunctionSquare,
+	Home,
+	Pencil,
+	Plus,
+	SigmaSquare,
+	Users,
 } from "lucide-react";
 import { Lessons, Role } from "@prisma/client";
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { NavigationAction } from "./navigation-action";
 import { NavigationItem } from "./navigation-item";
+import { ProfileSearch } from "../profile-search";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TaskSearch } from "../task/task-search";
@@ -33,12 +35,22 @@ export const NavigationSidebar = async () => {
 	if (!profile) return redirect("/");
 
 	const isAdmin = profile.role !== Role.USER;
-  
-  const tasks = isAdmin ? await db.task.findMany({
-    where: {
-      authorId: profile.id,
-    }
-  }) : undefined;
+
+	let tasks;
+	if (isAdmin)
+		tasks = await db.task.findMany({
+			where: {
+				authorId: profile.id,
+			},
+		});
+
+	let profiles;
+	if (profile.role === Role.CREATOR)
+		profiles = await db.profile.findMany({
+			orderBy: {
+				role: "desc",
+			},
+		});
 
 	return (
 		<div className="space-y-4 flex flex-col items-center h-full text-primary w-full bg-zinc-100 dark:bg-[#1e1f21] py-3">
@@ -62,9 +74,9 @@ export const NavigationSidebar = async () => {
 					</div>
 				))}
 				{isAdmin && (
-					<>
+					<div className="flex flex-col gap-2">
 						<Separator className="h-[2px] bg-zinc-300 dark:bg-zinc-700 rounded-md w-10 mx-auto mb-4" />
-						<div className="mb-4">
+						<div>
 							<NavigationAction
 								icon={
 									<Plus
@@ -76,8 +88,19 @@ export const NavigationSidebar = async () => {
 								action={"createTask"}
 							/>
 						</div>
-            <TaskSearch data={tasks} />
-					</>
+						<TaskSearch data={tasks} />
+						{profile.role === Role.CREATOR && <NavigationAction
+							icon={
+								<Users
+									className="group-hover:text-white transition"
+									size={25}
+								/>
+							}
+							label={"Управлять пользователями"}
+							action={"profiles"}
+							data={{ profiles }}
+						/>}
+					</div>
 				)}
 			</ScrollArea>
 
